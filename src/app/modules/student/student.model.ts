@@ -31,7 +31,7 @@ const studentSchema = new Schema<TStudent>(
   {
     id: { type: String, required: true },
     name: userNameSchema,
-    gender: ["male", "female", "other"],
+    gender: { type: String, enum: ["male", "female", "other"], required: true },
     dateOfBirth: { type: Date, required: true },
     email: { type: String, required: true },
     contactNo: { type: String, required: true },
@@ -46,4 +46,4 @@ const studentSchema = new Schema<TStudent>(
   { timestamps: true },
 );
 
-export const Student = model<TStudent>("student", studentSchema);
+export const Student = model<TStudent>("Student", studentSchema);
