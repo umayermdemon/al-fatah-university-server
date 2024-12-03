@@ -5,7 +5,7 @@ import tseslint from "typescript-eslint";
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   { files: ["**/*.{js,mjs,cjs,ts}"] },
-  { languageOptions: { globals: globals.browser } },
+  { languageOptions: { globals: { ...globals.browser, process: "readonly" } } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   {
@@ -14,6 +14,9 @@ export default [
       eqeqeq: "off",
       "no-unused-vars": "error",
       "prefer-const": ["error", { ignoreReadBeforeAssign: true }],
+      "no-console": "warn",
+      "no-unused-expressions": "error",
+      "no-undef": "error",
     },
   },
 ];

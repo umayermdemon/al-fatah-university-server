@@ -29,7 +29,7 @@ const localGuardianSchema = new Schema<TLocalGuardian>({
 
 const studentSchema = new Schema<TStudent>(
   {
-    id: { type: String, required: true },
+    id: { type: String, required: true, unique: true },
     name: userNameSchema,
     gender: { type: String, enum: ["male", "female", "other"], required: true },
     dateOfBirth: { type: Date, required: true },

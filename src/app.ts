@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(cors());
 
 // applications routes
-app.use("/api/v1", studentRouter);
+app.use("/api/v1/students", studentRouter);
 
 app.get("/", (req, res) => {
   // const a = 5;
