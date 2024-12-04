@@ -116,8 +116,18 @@ const studentSchema = new Schema<TStudent>(
     profileImage: { type: String, required: true, trim: true },
     isDeleted: { type: Boolean, required: true, trim: true, default: false },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
+  },
 );
+
+// virtual
+studentSchema.virtual("fullName").get(function () {
+  return `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}`;
+});
 
 // pre save middleware/ password bcrypt
 studentSchema.pre("save", async function (next) {
