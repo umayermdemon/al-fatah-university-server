@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-this-alias */
 import { model, Schema } from "mongoose";
 import {
   TGuardian,
@@ -6,9 +5,6 @@ import {
   TStudent,
   TUserName,
 } from "./student.interface";
-
-import bcrypt from "bcrypt";
-import config from "../../config";
 
 // validators.ts
 // const capitalizeFirstLetter = {
@@ -92,13 +88,6 @@ const studentSchema = new Schema<TStudent>(
       unique: true,
       ref: "User",
     },
-    password: {
-      type: String,
-      required: true,
-      trim: true,
-      minlength: [6, "Password must be longer than 6 character"],
-      maxlength: [20, "Password can't be more then 20 character"],
-    },
     name: { type: userNameSchema, required: true },
     gender: {
       type: String,
@@ -133,23 +122,6 @@ const studentSchema = new Schema<TStudent>(
 // virtual
 studentSchema.virtual("fullName").get(function () {
   return `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}`;
-});
-
-// pre save middleware/ password bcrypt
-studentSchema.pre("save", async function (next) {
-  const user = this;
-
-  user.password = await bcrypt.hash(
-    user.password,
-    Number(config.bcrypt_salt_rounds),
-  );
-  next();
-});
-
-// post save middleware/ empty password
-studentSchema.post("save", function (doc, next) {
-  doc.password = "";
-  next();
 });
 
 // pre find middleware
