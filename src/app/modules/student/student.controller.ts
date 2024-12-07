@@ -1,27 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from "express";
 import { studentServices } from "./student.service";
-import zStudent from "./student.validation";
-
-// create a student
-const createStudent = async (req: Request, res: Response) => {
-  try {
-    const student = req.body.students;
-    const zValidationData = zStudent.parse(student);
-    const result = await studentServices.createStudentIntoDb(zValidationData);
-    res.status(200).json({
-      success: true,
-      message: "Student created successfully",
-      data: result,
-    });
-  } catch (err: any) {
-    res.status(500).json({
-      success: false,
-      message: "Failed to created student",
-      error: err.message,
-    });
-  }
-};
 
 // get all students
 const getAllStudents = async (req: Request, res: Response) => {
@@ -81,7 +60,6 @@ const deleteSingleStudents = async (req: Request, res: Response) => {
 };
 
 export const studentControllers = {
-  createStudent,
   getAllStudents,
   getSingleStudents,
   deleteSingleStudents,

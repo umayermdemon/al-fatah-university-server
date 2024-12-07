@@ -2,43 +2,26 @@
 import { Request, Response } from "express";
 import { userServices } from "./user.service";
 
-// create user
-const createUser = async (req: Request, res: Response) => {
+// create a student
+const createStudent = async (req: Request, res: Response) => {
   try {
-    const user = req.body.users;
-    const result = await userServices.createUserIntoDb(user);
+    const { password, student } = req.body;
+    // const zValidationData = zStudent.parse(students);
+    const result = await userServices.createStudentIntoDb(password, student);
     res.status(200).json({
       success: true,
-      message: "User created successfully",
+      message: "Student created successfully",
       data: result,
     });
   } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: "Failed to created user",
-      error: err.message,
-    });
-  }
-};
-// get all user
-const getAllUser = async (req: Request, res: Response) => {
-  try {
-    const result = await userServices.getAllUserFromDb();
-    res.status(200).json({
-      success: true,
-      message: "All User got successfully",
-      data: result,
-    });
-  } catch (err: any) {
-    res.status(500).json({
-      success: false,
-      message: "Failed to get user",
+      message: "Failed to created student",
       error: err.message,
     });
   }
 };
 
 export const userControllers = {
-  createUser,
-  getAllUser,
+  createStudent,
 };
