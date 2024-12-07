@@ -36,7 +36,7 @@ const zLocalGuardian = z.object({
 // Define Zod schema for TStudent
 export const zStudent = z.object({
   id: z.string().min(1, "ID is required"),
-  password: z.string(),
+  user: z.string(),
   name: zUserName,
   gender: z.enum(["male", "female", "other"], {
     required_error: "Gender is required",
