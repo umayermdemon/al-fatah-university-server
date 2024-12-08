@@ -1,20 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
-import { NextFunction, Request, RequestHandler, Response } from "express";
 import { userServices } from "./user.service";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
-import catchAsync from "../../middlewares/catchAsync";
-
-// // catchAsync
-// const catchAsync = (fn: RequestHandler) => {
-//   return (req: Request, res: Response, next: NextFunction) => {
-//     Promise.resolve(fn(req, res, next)).catch(err => next(err));
-//   };
-// };
+import catchAsync from "../../utils/catchAsync";
 
 // create a student
-const createStudent = catchAsync(async (req, res, next) => {
+const createStudent = catchAsync(async (req, res) => {
   const { password, student } = req.body;
   // const zValidationData = zStudent.parse(student);
   const result = await userServices.createStudentIntoDb(password, student);

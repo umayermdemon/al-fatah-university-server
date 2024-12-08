@@ -5,7 +5,7 @@ const capitalizeValidation = z
   .string()
   .min(1, "Field is required")
   .refine(value => value.charAt(0) === value.charAt(0).toUpperCase(), {
-    message: "Word must start with a capital letter",
+    message: "First word must start with a capital letter",
   });
 
 // Define Zod schema for TUserName
@@ -34,25 +34,31 @@ const zLocalGuardian = z.object({
 });
 
 // Define Zod schema for TStudent
-export const zStudent = z.object({
-  id: z.string().min(1, "ID is required"),
-  user: z.string(),
-  name: zUserName,
-  gender: z.enum(["male", "female", "other"], {
-    required_error: "Gender is required",
+const zCreateStudent = z.object({
+  body: z.object({
+    student: z.object({
+      // user: z.string(),
+      name: zUserName,
+      gender: z.enum(["male", "female", "other"], {
+        required_error: "Gender is required",
+      }),
+      dateOfBirth: z.string().refine(date => !isNaN(Date.parse(date)), {
+        message: "Invalid date format",
+      }),
+      email: z.string().email("Invalid email address"),
+      contactNo: z.string().min(1, "Contact number is required"),
+      emergencyContactNo: z
+        .string()
+        .min(1, "Emergency contact number is required"),
+      presentAddress: z.string().min(1, "Present address is required"),
+      permanentAddress: z.string().min(1, "Permanent address is required"),
+      guardian: zGuardian,
+      localGuardian: zLocalGuardian,
+      profileImage: z.string().url("Profile image must be a valid URL"),
+    }),
   }),
-  dateOfBirth: z.string().refine(date => !isNaN(Date.parse(date)), {
-    message: "Invalid date format",
-  }),
-  email: z.string().email("Invalid email address"),
-  contactNo: z.string().min(1, "Contact number is required"),
-  emergencyContactNo: z.string().min(1, "Emergency contact number is required"),
-  presentAddress: z.string().min(1, "Present address is required"),
-  permanentAddress: z.string().min(1, "Permanent address is required"),
-  guardian: zGuardian,
-  localGuardian: zLocalGuardian,
-  profileImage: z.string().url("Profile image must be a valid URL"),
-  isDeleted: z.boolean(),
 });
 
-export default zStudent;
+export const zStudentValidations = {
+  zCreateStudent,
+};

@@ -16,11 +16,10 @@ app.use("/api/v1", router);
 app.get("/", (req, res) => {
   res.send("Hello Worlds!");
 });
+// not found
+app.use(notFound);
 
 // global error handler
 app.use(globalErrorHandler);
-
-// not found
-app.use(notFound);
 
 export default app;
