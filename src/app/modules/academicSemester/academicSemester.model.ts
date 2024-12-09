@@ -18,6 +18,19 @@ const academicSemesterSchema = new Schema<TAcademicSemester>(
     timestamps: true,
   },
 );
+
+// duplicate user detect middleware
+academicSemesterSchema.pre("save", async function (next) {
+  const isAcademicSemesterExists = await AcademicSemester.findOne({
+    name: this.name,
+    code: this.code,
+  });
+  if (isAcademicSemesterExists) {
+    throw new Error("Academic semester already exist");
+  }
+
+  next();
+});
 export const AcademicSemester = model<TAcademicSemester>(
   "AcademicSemester",
   academicSemesterSchema,
