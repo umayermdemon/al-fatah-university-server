@@ -51,8 +51,7 @@ const updateSingleStudentIntoDb = async (
       modifiedUpdatedData[`localGuardian.${key}`] = value;
     }
   }
-  console.log(name);
-  console.log(modifiedUpdatedData);
+
   const result = await Student.findOneAndUpdate({ id }, modifiedUpdatedData, {
     new: true,
     runValidators: true,
