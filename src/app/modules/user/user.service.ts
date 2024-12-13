@@ -1,14 +1,20 @@
 import config from "../../config";
+import { AcademicSemester } from "../academicSemester/academicSemester.model";
 import { TStudent } from "../student/student.interface";
 import { Student } from "../student/student.model";
 import { TUser } from "./user.interface";
 import { User } from "./user.model";
+import { generatedStudentId } from "./user.utils";
 
 // create a student
 const createStudentIntoDb = async (password: string, student: TStudent) => {
   const user: Partial<TUser> = {};
-
-  user.id = "123456";
+  const admissionSemester = await AcademicSemester.findById(
+    student.admissionSemester,
+  );
+  if (admissionSemester) {
+    user.id = await generatedStudentId(admissionSemester);
+  }
   user.password = password || (config.default_password as string);
   user.role = "Student";
 

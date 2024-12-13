@@ -36,8 +36,8 @@ const zLocalGuardian = z.object({
 // Define Zod schema for TStudent
 const zCreateStudent = z.object({
   body: z.object({
+    password: z.string().max(25).optional(),
     student: z.object({
-      // user: z.string(),
       name: zUserName,
       gender: z.enum(["male", "female", "other"], {
         required_error: "Gender is required",
@@ -54,6 +54,7 @@ const zCreateStudent = z.object({
       permanentAddress: z.string().min(1, "Permanent address is required"),
       guardian: zGuardian,
       localGuardian: zLocalGuardian,
+      admissionSemester: z.string(),
       profileImage: z.string().url("Profile image must be a valid URL"),
     }),
   }),

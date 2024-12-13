@@ -24,6 +24,7 @@ academicSemesterSchema.pre("save", async function (next) {
   const isAcademicSemesterExists = await AcademicSemester.findOne({
     name: this.name,
     code: this.code,
+    year: this.year,
   });
   if (isAcademicSemesterExists) {
     throw new Error("Academic semester already exist");
