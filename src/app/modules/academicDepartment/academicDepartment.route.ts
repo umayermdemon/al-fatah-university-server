@@ -8,9 +8,9 @@ const router = Router();
 // create a academic Department
 router.post(
   "/create-academic-department",
-  validateRequest(
-    zAcademicDepartmentValidations.createAcademicDepartmentValidation,
-  ),
+  // validateRequest(
+  //   zAcademicDepartmentValidations.createAcademicDepartmentValidation,
+  // ),
   AcademicDepartmentControllers.createAcademicDepartment,
 );
 
