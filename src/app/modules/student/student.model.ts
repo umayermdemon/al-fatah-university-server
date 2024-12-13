@@ -5,16 +5,7 @@ import {
   TStudent,
   TUserName,
 } from "./student.interface";
-
-// validators.ts
-// const capitalizeFirstLetter = {
-//   validator: function (value: string) {
-//     const firstChar = value.charAt(0).toUpperCase() + value.slice(1);
-//     return firstChar === value;
-//   },
-//   message: "{VALUE} is not capitalized",
-// };
-
+//
 const userNameSchema = new Schema<TUserName>({
   firstName: {
     type: String,
@@ -107,7 +98,18 @@ const studentSchema = new Schema<TStudent>(
     permanentAddress: { type: String, required: true, trim: true },
     guardian: { type: guardianSchema, required: true },
     localGuardian: { type: localGuardianSchema, required: true },
-    admissionSemester: { type: Schema.Types.ObjectId, ref: "AcademicSemester" },
+    admissionSemester: {
+      type: Schema.Types.ObjectId,
+      ref: "AcademicSemester",
+      required: true,
+      unique: true,
+    },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      ref: "AcademicDepartment",
+      required: true,
+      unique: true,
+    },
     profileImage: { type: String, required: true, trim: true },
     isDeleted: { type: Boolean, required: true, trim: true, default: false },
   },
