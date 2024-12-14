@@ -13,7 +13,8 @@ app.use(cors());
 // applications routes
 app.use("/api/v1", router);
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+  // Promise.reject();
   res.send("Hello Worlds!");
 });
 // not found

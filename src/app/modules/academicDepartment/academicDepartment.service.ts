@@ -32,10 +32,12 @@ const updateSingleAcademicDepartmentFromDb = async (
   );
   return result;
 };
-
+// Promise.reject();
 export const AcademicDepartmentServices = {
   createAcademicDepartmentIntoDb,
   getAllAcademicDepartmentFromDb,
   getSingleAcademicDepartmentFromDb,
   updateSingleAcademicDepartmentFromDb,
 };
+
+// console.log(x);
