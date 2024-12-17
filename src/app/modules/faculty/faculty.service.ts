@@ -7,88 +7,32 @@ import { Faculty } from "./faculty.model";
 import { TFaculty } from "./faculty.interface";
 import { FacultySearchableFields } from "./faculty.const";
 
-// get all students
+// get all faculties
 const getAllFacultiesFromDb = async (query: Record<string, unknown>) => {
-  // const queryObj = { ...query }; //copy query
-
-  // let searchTerm = "";
-  // if (query?.searchTerm) {
-  //   searchTerm = query?.searchTerm as string;
-  // }
-
-  // const searchQuery = Student.find({
-  //   $or: studentSearchableFields.map(field => ({
-  //     [field]: { $regex: searchTerm, $options: "i" },
-  //   })),
-  // });
-  // // exclude fields where delete exact field
-  // const excludeFields = ["searchTerm", "sort", "limit", "page", "fields"];
-  // excludeFields.forEach(el => delete queryObj[el]);
-  // console.log(query, queryObj);
-
-  // // filterQuery
-  // const filterQuery = searchQuery
-  //   .find(queryObj)
-  //   .populate("academicDepartment")
-  //   .populate("admissionSemester");
-
-  // // sortQuery
-  // let sort = "-createdAt";
-  // if (query.sort) {
-  //   sort = query.sort as string;
-  // }
-  // const sortQuery = filterQuery.sort(sort);
-
-  // // limit & paginate query
-  // let page = 1;
-  // let limit = 1;
-  // let skip = 0;
-  // if (query.limit) {
-  //   limit = Number(query.limit);
-  // }
-  // if (query.page) {
-  //   page = Number(query.page);
-  //   skip = (page - 1) * limit;
-  // }
-
-  // const paginateQuery = sortQuery.skip(skip);
-
-  // const limitQuery = paginateQuery.limit(limit);
-
-  // // fields limiting
-
-  // let fields = "-__v";
-  // if (query.fields) {
-  //   fields = (query.fields as string).split(",").join(" ");
-  // }
-
-  // const fieldsQuery = await limitQuery.select(fields);
-
-  const studentQuery = new QueryBuilder(Faculty.find(), query)
+  const facultyQuery = new QueryBuilder(Faculty.find(), query)
     .search(FacultySearchableFields)
     .filter()
     .sort()
     .paginate()
     .fields();
 
-  const result = await studentQuery.queryModel;
+  const result = await facultyQuery.queryModel;
 
   return result;
 };
 
-// get single students
+// get single faculty
 
 const getSingleFacultyFromDb = async (id: string) => {
-  const isStudentExists = await Faculty.findById(id);
-  if (!isStudentExists) {
-    throw new AppError(httpStatus.NOT_FOUND, "Student doesn't exist");
+  const isFacultyExists = await Faculty.findById(id);
+  if (!isFacultyExists) {
+    throw new AppError(httpStatus.NOT_FOUND, "Faculty doesn't exist");
   }
   const result = await Faculty.findById(id);
-  // const result = await Student.aggregate([{ $match: { id } }]);
   return result;
 };
 
-// update single student
+// update single faculty
 const updateSingleFacultyIntoDb = async (
   id: string,
   payload: Partial<TFaculty>,
@@ -110,7 +54,7 @@ const updateSingleFacultyIntoDb = async (
   return result;
 };
 
-// delete single students
+// delete single faculty
 const deleteSingleFacultyFromDb = async (id: string) => {
   const isFacultyExists = await Faculty.findById(id);
   if (!isFacultyExists) {
@@ -131,7 +75,7 @@ const deleteSingleFacultyFromDb = async (id: string) => {
     );
 
     if (!deletedFaculty) {
-      throw new AppError(httpStatus.BAD_REQUEST, "Failed to delete student");
+      throw new AppError(httpStatus.BAD_REQUEST, "Failed to delete faculty");
     }
     // delete a user
     const userId = deletedFaculty.user;
@@ -152,7 +96,7 @@ const deleteSingleFacultyFromDb = async (id: string) => {
   } catch {
     await session.abortTransaction();
     await session.endSession();
-    throw new AppError(httpStatus.BAD_REQUEST, "Failed delete student");
+    throw new AppError(httpStatus.BAD_REQUEST, "Failed delete faculty");
   }
 };
 
