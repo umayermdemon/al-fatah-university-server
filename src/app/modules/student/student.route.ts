@@ -7,11 +7,11 @@ const router = Router();
 router.get("/", studentControllers.getAllStudents);
 
 // get single student
-router.get("/:studentId", studentControllers.getSingleStudents);
+router.get("/:id", studentControllers.getSingleStudents);
 
 // update single student
-router.patch("/:studentId", studentControllers.updateSingleStudents);
+router.patch("/:id", studentControllers.updateSingleStudents);
 // delete single student
-router.delete("/:studentId", studentControllers.deleteSingleStudents);
+router.delete("/:id", studentControllers.deleteSingleStudents);
 
 export const studentRouter = router;

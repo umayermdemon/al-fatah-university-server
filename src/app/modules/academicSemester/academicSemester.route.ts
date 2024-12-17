@@ -15,13 +15,10 @@ router.post(
 );
 
 // find single academic semester
-router.get(
-  "/:semesterId",
-  AcademicSemesterControllers.getSingleAcademicSemester,
-);
+router.get("/:id", AcademicSemesterControllers.getSingleAcademicSemester);
 // update single academic semester
 router.patch(
-  "/:semesterId",
+  "/:id",
   validateRequest(
     zAcademicSemesterValidations.updateAcademicSemesterValidation,
   ),

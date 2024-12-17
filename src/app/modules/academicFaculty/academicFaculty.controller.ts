@@ -28,9 +28,9 @@ const getAllAcademicFaculty = catchAsync(async (req, res) => {
 });
 // get single academic Faculty data
 const getSingleAcademicFaculty = catchAsync(async (req, res) => {
-  const { facultyId } = req.params;
+  const { id } = req.params;
   const result =
-    await AcademicFacultyServices.getSingleAcademicFacultyFromDb(facultyId);
+    await AcademicFacultyServices.getSingleAcademicFacultyFromDb(id);
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -40,10 +40,10 @@ const getSingleAcademicFaculty = catchAsync(async (req, res) => {
 });
 // update single academic Faculty data
 const updateSingleAcademicFaculty = catchAsync(async (req, res) => {
-  const { facultyId } = req.params;
+  const { id } = req.params;
   const result =
     await AcademicFacultyServices.updateSingleAcademicFacultyFromDb(
-      facultyId,
+      id,
       req.body,
     );
   sendResponse(res, {

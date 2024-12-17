@@ -17,13 +17,10 @@ router.post(
 // find all academic Department
 router.get("/", AcademicDepartmentControllers.getAllAcademicDepartment);
 // find single academic Department
-router.get(
-  "/:departmentId",
-  AcademicDepartmentControllers.getSingleAcademicDepartment,
-);
+router.get("/:id", AcademicDepartmentControllers.getSingleAcademicDepartment);
 // update single academic Department
 router.patch(
-  "/:departmentId",
+  "/:id",
   validateRequest(
     zAcademicDepartmentValidations.updateAcademicDepartmentValidation,
   ),

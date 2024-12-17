@@ -15,10 +15,10 @@ router.post(
 // find all academic Faculty
 router.get("/", AcademicFacultyControllers.getAllAcademicFaculty);
 // find single academic Faculty
-router.get("/:facultyId", AcademicFacultyControllers.getSingleAcademicFaculty);
+router.get("/:id", AcademicFacultyControllers.getSingleAcademicFaculty);
 // update single academic Faculty
 router.patch(
-  "/:facultyId",
+  "/:id",
   validateRequest(zAcademicFacultyValidations.updateAcademicFacultyValidation),
   AcademicFacultyControllers.updateSingleAcademicFaculty,
 );

@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
-import { Student } from "./student.model";
 import { User } from "../user/user.model";
 import AppError from "../../errors/AppError";
 import httpStatus from "http-status";
-import { TStudent } from "./student.interface";
 import QueryBuilder from "../../builder/QueryBuilder";
-import { studentSearchableFields } from "./student.const";
+import { Faculty } from "./faculty.model";
+import { TFaculty } from "./faculty.interface";
+import { FacultySearchableFields } from "./faculty.const";
 
 // get all students
-const getAllStudentsFromDb = async (query: Record<string, unknown>) => {
+const getAllFacultiesFromDb = async (query: Record<string, unknown>) => {
   // const queryObj = { ...query }; //copy query
 
   // let searchTerm = "";
@@ -64,18 +64,8 @@ const getAllStudentsFromDb = async (query: Record<string, unknown>) => {
 
   // const fieldsQuery = await limitQuery.select(fields);
 
-  const studentQuery = new QueryBuilder(
-    Student.find()
-      .populate("admissionSemester")
-      .populate({
-        path: "academicDepartment",
-        populate: {
-          path: "academicFaculty",
-        },
-      }),
-    query,
-  )
-    .search(studentSearchableFields)
+  const studentQuery = new QueryBuilder(Faculty.find(), query)
+    .search(FacultySearchableFields)
     .filter()
     .sort()
     .paginate()
@@ -88,44 +78,32 @@ const getAllStudentsFromDb = async (query: Record<string, unknown>) => {
 
 // get single students
 
-const getSingleStudentFromDb = async (id: string) => {
-  const isStudentExists = await Student.findOne({ id });
+const getSingleFacultyFromDb = async (id: string) => {
+  const isStudentExists = await Faculty.findById(id);
   if (!isStudentExists) {
     throw new AppError(httpStatus.NOT_FOUND, "Student doesn't exist");
   }
-  const result = await Student.findOne({ id })
-    .populate("academicDepartment")
-    .populate("admissionSemester");
+  const result = await Faculty.findById(id);
   // const result = await Student.aggregate([{ $match: { id } }]);
   return result;
 };
 
 // update single student
-const updateSingleStudentIntoDb = async (
+const updateSingleFacultyIntoDb = async (
   id: string,
-  payload: Partial<TStudent>,
+  payload: Partial<TFaculty>,
 ) => {
-  const { name, guardian, localGuardian, ...remainingStudentData } = payload;
+  const { name, ...remainingFacultyData } = payload;
   const modifiedUpdatedData: Record<string, unknown> = {
-    ...remainingStudentData,
+    ...remainingFacultyData,
   };
-  if (name && [name].length) {
+  if (name && [name]?.length) {
     for (const [key, value] of Object.entries(name)) {
       modifiedUpdatedData[`name.${key}`] = value;
     }
   }
-  if (guardian && [guardian].length) {
-    for (const [key, value] of Object.entries(guardian)) {
-      modifiedUpdatedData[`guardian.${key}`] = value;
-    }
-  }
-  if (localGuardian && [localGuardian].length) {
-    for (const [key, value] of Object.entries(localGuardian)) {
-      modifiedUpdatedData[`localGuardian.${key}`] = value;
-    }
-  }
 
-  const result = await Student.findOneAndUpdate({ id }, modifiedUpdatedData, {
+  const result = await Faculty.findByIdAndUpdate(id, modifiedUpdatedData, {
     new: true,
     runValidators: true,
   });
@@ -133,8 +111,8 @@ const updateSingleStudentIntoDb = async (
 };
 
 // delete single students
-const deleteSingleStudentFromDb = async (id: string) => {
-  const isStudentExists = await Student.findOne({ id });
+const deleteSingleFacultyFromDb = async (id: string) => {
+  const isStudentExists = await Faculty.findOne({ id });
   if (!isStudentExists) {
     throw new AppError(httpStatus.NOT_FOUND, "Student doesn't exist");
   }
@@ -143,7 +121,7 @@ const deleteSingleStudentFromDb = async (id: string) => {
   try {
     session.startTransaction();
     // delete a student
-    const deletedStudent = await Student.findOneAndUpdate(
+    const deletedStudent = await Faculty.findOneAndUpdate(
       { id },
       { isDeleted: true },
       {
@@ -177,9 +155,9 @@ const deleteSingleStudentFromDb = async (id: string) => {
   }
 };
 
-export const studentServices = {
-  getAllStudentsFromDb,
-  getSingleStudentFromDb,
-  updateSingleStudentIntoDb,
-  deleteSingleStudentFromDb,
+export const facultyServices = {
+  getAllFacultiesFromDb,
+  getSingleFacultyFromDb,
+  updateSingleFacultyIntoDb,
+  deleteSingleFacultyFromDb,
 };
