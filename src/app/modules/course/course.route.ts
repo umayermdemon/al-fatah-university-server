@@ -24,6 +24,19 @@ router.patch(
   validateRequest(zCourseValidations.zUpdateCourseValidationSchema),
   courseControllers.updateSingleCourse,
 );
+
+// add courseFaculty
+router.put(
+  "/:courseId/assign-faculties",
+  validateRequest(zCourseValidations.zUpdateCourseFacultyValidationSchema),
+  courseControllers.assignFacultiesWithCourse,
+);
+// remove courseFaculty
+router.delete(
+  "/:courseFacultyId/remove-faculties",
+  validateRequest(zCourseValidations.zUpdateCourseFacultyValidationSchema),
+  courseControllers.removeFacultiesWithCourse,
+);
 // delete single course
 router.delete("/:id", courseControllers.deleteSingleCourse);
 
