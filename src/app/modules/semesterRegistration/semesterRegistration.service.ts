@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import mongoose from "mongoose";
 import QueryBuilder from "../../builder/QueryBuilder";
 import AppError from "../../errors/AppError";
 import { AcademicSemester } from "../academicSemester/academicSemester.model";
@@ -5,6 +7,7 @@ import { RegistrationStatus } from "./semesterRegistration.const";
 import { TSemesterRegistration } from "./semesterRegistration.interface";
 import { SemesterRegistration } from "./semesterRegistration.model";
 import httpStatus from "http-status";
+import { OfferedCourse } from "../offeredCourse/offeredCourse.model";
 
 const createSemesterRegistrationIntoDb = async (
   payload: TSemesterRegistration,
@@ -103,10 +106,58 @@ const updateSemesterRegistrationIntoDb = async (
   });
   return result;
 };
+const deleteSemesterRegistrationIntoDb = async (id: string) => {
+  const isSemesterRegistrationExists = await SemesterRegistration.findById(id);
+  if (!isSemesterRegistrationExists) {
+    throw new AppError(httpStatus.NOT_FOUND, "Semester not found");
+  }
+  const semesterRegistrationStatus = isSemesterRegistrationExists?.status;
+
+  if (semesterRegistrationStatus !== "UPCOMING") {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `You can not delete as the registered semester is ${semesterRegistrationStatus}`,
+    );
+  }
+
+  const session = await mongoose.startSession();
+  try {
+    session.startTransaction();
+    const deletedOfferedCourse = await OfferedCourse.deleteMany(
+      {
+        semesterRegistration: id,
+      },
+      {
+        session,
+      },
+    );
+    if (!deletedOfferedCourse) {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        "Failed to delete semester registration !",
+      );
+    }
+    const deleteSemesterRegistration =
+      await SemesterRegistration.findByIdAndDelete(id, { session, new: true });
+    if (!deleteSemesterRegistration) {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        "Failed to delete semester registration !",
+      );
+    }
+    await session.commitTransaction();
+    await session.endSession();
+  } catch (err: any) {
+    await session.abortTransaction();
+    await session.endSession();
+    throw new Error(err);
+  }
+};
 
 export const semesterRegistrationServices = {
   createSemesterRegistrationIntoDb,
   getAllSemesterRegistrationIntoDb,
   getSingleSemesterRegistrationIntoDb,
   updateSemesterRegistrationIntoDb,
+  deleteSemesterRegistrationIntoDb,
 };

@@ -52,10 +52,22 @@ const updateSemesterRegistration = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const deleteSemesterRegistration = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result =
+    await semesterRegistrationServices.deleteSemesterRegistrationIntoDb(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Semester Registration is deleted successfully !",
+    data: result,
+  });
+});
 
 export const semesterRegistrationControllers = {
   createSemesterRegistration,
   getAllSemesterRegistration,
   getSingleSemesterRegistration,
   updateSemesterRegistration,
+  deleteSemesterRegistration,
 };
