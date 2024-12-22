@@ -4,7 +4,7 @@ import config from "../../config";
 import { AcademicSemester } from "../academicSemester/academicSemester.model";
 import { TStudent } from "../student/student.interface";
 import { Student } from "../student/student.model";
-import { TUser } from "./user.interface";
+import { IUser } from "./user.interface";
 import { User } from "./user.model";
 import {
   generatedAdminId,
@@ -20,7 +20,7 @@ import { Faculty } from "../faculty/faculty.model";
 
 // create a student
 const createStudentIntoDb = async (password: string, student: TStudent) => {
-  const user: Partial<TUser> = {};
+  const user: Partial<IUser> = {};
   const admissionSemester = await AcademicSemester.findById(
     student.admissionSemester,
   );
@@ -58,7 +58,7 @@ const createStudentIntoDb = async (password: string, student: TStudent) => {
 
 // create a faculty
 const createFacultyIntoDb = async (password: string, faculty: TFaculty) => {
-  const user: Partial<TUser> = {};
+  const user: Partial<IUser> = {};
   user.id = await generatedFacultyId();
   user.role = "Faculty";
   user.password = password || (config.default_password as string);
@@ -89,7 +89,7 @@ const createFacultyIntoDb = async (password: string, faculty: TFaculty) => {
 };
 // create a admin
 const createAdminIntoDb = async (password: string, admin: TAdmin) => {
-  const user: Partial<TUser> = {};
+  const user: Partial<IUser> = {};
   user.id = await generatedAdminId();
   user.role = "Admin";
   user.password = password || (config.default_password as string);
