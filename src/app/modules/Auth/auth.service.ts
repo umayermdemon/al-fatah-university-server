@@ -24,7 +24,7 @@ const loginUser = async (payload: TLoginUser) => {
     payload?.password,
     user?.password,
   );
-  console.log(isPasswordMatch);
+
   if (!isPasswordMatch) {
     throw new AppError(httpStatus.FORBIDDEN, "Password do not matched");
   }
@@ -82,9 +82,10 @@ const changePassword = async (
     {
       password: newHashedPassword,
       needsPasswordChange: false,
+      passwordChangedAt: new Date(),
     },
   );
-  return { result, user };
+  return result;
 };
 
 export const authServices = {

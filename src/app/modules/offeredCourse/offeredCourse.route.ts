@@ -3,6 +3,7 @@ import validateRequest from "../../middlewares/validateRequest";
 import { zOfferedCourseValidations } from "./offeredCourse.validation";
 import { offeredCourseControllers } from "./offeredCourse.controller";
 import auth from "../../middlewares/auth";
+import { userRole } from "../Auth/auth.const";
 
 const router = Router();
 
@@ -13,7 +14,11 @@ router.post(
   ),
   offeredCourseControllers.createOfferedCourse,
 );
-router.get("/", auth(), offeredCourseControllers.getAllOfferedCourse);
+router.get(
+  "/",
+  auth(userRole.Admin, userRole.Faculty, userRole.Student),
+  offeredCourseControllers.getAllOfferedCourse,
+);
 router.get("/:id", offeredCourseControllers.getSingleOfferedCourse);
 router.patch(
   "/:id",

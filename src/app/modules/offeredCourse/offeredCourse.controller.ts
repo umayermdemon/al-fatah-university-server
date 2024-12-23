@@ -15,7 +15,6 @@ const createOfferedCourse = catchAsync(async (req, res) => {
   });
 });
 const getAllOfferedCourse = catchAsync(async (req, res) => {
-  console.log(req?.user);
   const result = await offeredCourseServices.getAllOfferedCourseFromDb(
     req.query,
   );
