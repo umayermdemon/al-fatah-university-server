@@ -4,12 +4,15 @@ import validateRequest from "../../middlewares/validateRequest";
 import { zStudentValidations } from "../student/student.validation";
 import { zFacultyValidations } from "../faculty/faculty.validation";
 import { zAdminValidations } from "../admin/admin.validation";
+import auth from "../../middlewares/auth";
+import { userRole } from "../Auth/auth.const";
 
 const router = Router();
 
 // create a user
 router.post(
   "/create-student",
+  auth(userRole.Admin),
   validateRequest(zStudentValidations.zCreateStudent),
   userControllers.createStudent,
 );
@@ -25,5 +28,7 @@ router.post(
   validateRequest(zAdminValidations.zCreateAdmin),
   userControllers.createAdmin,
 );
+
+router.get("/", userControllers.getAllUser);
 
 export const userRouter = router;

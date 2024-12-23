@@ -17,6 +17,8 @@ import { TFaculty } from "../faculty/faculty.interface";
 import { TAdmin } from "../admin/admin.interface";
 import { Admin } from "../admin/admin.model";
 import { Faculty } from "../faculty/faculty.model";
+import QueryBuilder from "../../builder/QueryBuilder";
+import { userSearchableFields } from "./user.const";
 
 // create a student
 const createStudentIntoDb = async (password: string, student: TStudent) => {
@@ -119,8 +121,21 @@ const createAdminIntoDb = async (password: string, admin: TAdmin) => {
   }
 };
 
+// get all user
+const getAllUserFromDb = async (query: Record<string, unknown>) => {
+  const userQuery = new QueryBuilder(User.find(), query)
+    .search(userSearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+  const result = await userQuery.queryModel;
+  return result;
+};
+
 export const userServices = {
   createStudentIntoDb,
   createFacultyIntoDb,
   createAdminIntoDb,
+  getAllUserFromDb,
 };

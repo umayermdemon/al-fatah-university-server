@@ -9,8 +9,7 @@ const userSchema = new Schema<IUser, UserModel>(
       type: String,
       required: true,
       trim: true,
-      minlength: [6, "Password must be longer than 6 character"],
-      maxlength: [25, "Password can't be more then 25 character"],
+      select: 0,
     },
     needsPasswordChange: { type: Boolean, default: true },
     role: {
@@ -47,7 +46,7 @@ userSchema.post("save", function (doc, next) {
 });
 
 userSchema.statics.isUserExistsByCustomId = async function (id: string) {
-  return await User.findOne({ id });
+  return await User.findOne({ id }).select("+password");
 };
 userSchema.statics.isPasswordMatched = async function (
   plainPassword: string,

@@ -43,8 +43,20 @@ const createAdmin = catchAsync(async (req, res) => {
   });
 });
 
+// get all user
+const getAllUser = catchAsync(async (req, res) => {
+  const result = await userServices.getAllUserFromDb(req.query);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "All user are retrieved successfully",
+    data: result,
+  });
+});
+
 export const userControllers = {
   createStudent,
   createFaculty,
   createAdmin,
+  getAllUser,
 };
