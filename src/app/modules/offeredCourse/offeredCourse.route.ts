@@ -3,7 +3,6 @@ import validateRequest from "../../middlewares/validateRequest";
 import { zOfferedCourseValidations } from "./offeredCourse.validation";
 import { offeredCourseControllers } from "./offeredCourse.controller";
 import auth from "../../middlewares/auth";
-import { userRole } from "../Auth/auth.const";
 
 const router = Router();
 
@@ -16,7 +15,7 @@ router.post(
 );
 router.get(
   "/",
-  auth(userRole.Admin, userRole.Faculty, userRole.Student),
+  auth("Admin", "Faculty", "Student"),
   offeredCourseControllers.getAllOfferedCourse,
 );
 router.get("/:id", offeredCourseControllers.getSingleOfferedCourse);
