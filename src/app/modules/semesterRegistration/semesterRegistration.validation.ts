@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { SemesterRegistrationStatus } from "./semesterRegistration.const";
 
-const zCreateSemesterRegistrationValidationSchema = z.object({
+const CreateSemesterRegistrationValidationSchema = z.object({
   body: z.object({
     academicSemester: z.string(),
     status: z
@@ -13,7 +13,7 @@ const zCreateSemesterRegistrationValidationSchema = z.object({
     maxCredit: z.number().optional(),
   }),
 });
-const zUpdateSemesterRegistrationValidationSchema = z.object({
+const UpdateSemesterRegistrationValidationSchema = z.object({
   body: z.object({
     academicSemester: z.string().optional(),
     status: z
@@ -26,7 +26,7 @@ const zUpdateSemesterRegistrationValidationSchema = z.object({
   }),
 });
 
-export const zSemesterRegistrationValidations = {
-  zCreateSemesterRegistrationValidationSchema,
-  zUpdateSemesterRegistrationValidationSchema,
+export const SemesterRegistrationValidations = {
+  CreateSemesterRegistrationValidationSchema,
+  UpdateSemesterRegistrationValidationSchema,
 };

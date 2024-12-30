@@ -1,6 +1,6 @@
 import { Router } from "express";
 import validateRequest from "../../middlewares/validateRequest";
-import { zAcademicFacultyValidations } from "./academicFaculty.validation";
+import { AcademicFacultyValidations } from "./academicFaculty.validation";
 import { AcademicFacultyControllers } from "./academicFaculty.controller";
 
 const router = Router();
@@ -8,7 +8,7 @@ const router = Router();
 // create a academic Faculty
 router.post(
   "/create-academic-faculty",
-  validateRequest(zAcademicFacultyValidations.createAcademicFacultyValidation),
+  validateRequest(AcademicFacultyValidations.createAcademicFacultyValidation),
   AcademicFacultyControllers.createAcademicFaculty,
 );
 
@@ -19,7 +19,7 @@ router.get("/:id", AcademicFacultyControllers.getSingleAcademicFaculty);
 // update single academic Faculty
 router.patch(
   "/:id",
-  validateRequest(zAcademicFacultyValidations.updateAcademicFacultyValidation),
+  validateRequest(AcademicFacultyValidations.updateAcademicFacultyValidation),
   AcademicFacultyControllers.updateSingleAcademicFaculty,
 );
 

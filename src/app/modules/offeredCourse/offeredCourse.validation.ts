@@ -10,7 +10,7 @@ const timeStringSchema = z.string().refine(
   },
 );
 
-const zCreateOfferedCourseValidationSchema = z.object({
+const CreateOfferedCourseValidationSchema = z.object({
   body: z
     .object({
       semesterRegistration: z.string(),
@@ -35,7 +35,7 @@ const zCreateOfferedCourseValidationSchema = z.object({
       },
     ),
 });
-const zUpdateOfferedCourseValidationSchema = z.object({
+const UpdateOfferedCourseValidationSchema = z.object({
   body: z
     .object({
       faculty: z.string(),
@@ -57,7 +57,7 @@ const zUpdateOfferedCourseValidationSchema = z.object({
     ),
 });
 
-export const zOfferedCourseValidations = {
-  zCreateOfferedCourseValidationSchema,
-  zUpdateOfferedCourseValidationSchema,
+export const OfferedCourseValidations = {
+  CreateOfferedCourseValidationSchema,
+  UpdateOfferedCourseValidationSchema,
 };

@@ -13,7 +13,7 @@ const updateAcademicDepartmentValidation = z.object({
   }),
 });
 
-export const zAcademicDepartmentValidations = {
+export const AcademicDepartmentValidations = {
   createAcademicDepartmentValidation,
   updateAcademicDepartmentValidation,
 };

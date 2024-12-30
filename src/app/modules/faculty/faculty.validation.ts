@@ -1,17 +1,17 @@
 import { z } from "zod";
 
-const zCreateName = z.object({
+const CreateName = z.object({
   firstName: z.string().trim().min(1, "First name is required"),
   middleName: z.string().trim().optional(),
   lastName: z.string().trim().min(1, "Last name is required"),
 });
 
-const zCreateFaculty = z.object({
+const CreateFaculty = z.object({
   body: z.object({
     password: z.string().max(25).optional(),
     faculty: z.object({
       designation: z.string().trim().min(1, "Designation is required"),
-      name: zCreateName,
+      name: CreateName,
       gender: z.enum(["male", "female", "other"]),
       dateOfBirth: z.string().refine(date => !isNaN(Date.parse(date)), {
         message: "Invalid date format",
@@ -37,17 +37,17 @@ const zCreateFaculty = z.object({
   }),
 });
 
-const zUpdateName = z.object({
+const UpdateName = z.object({
   firstName: z.string().trim().optional(),
   middleName: z.string().trim().optional(),
   lastName: z.string().trim().optional(),
 });
 
-const zUpdateFaculty = z.object({
+const UpdateFaculty = z.object({
   body: z.object({
     faculty: z.object({
       designation: z.string().trim().optional(),
-      name: zUpdateName.optional(),
+      name: UpdateName.optional(),
       gender: z.enum(["male", "female", "other"]).optional(),
       dateOfBirth: z
         .string()
@@ -72,7 +72,7 @@ const zUpdateFaculty = z.object({
 });
 
 // Export the validation schema
-export const zFacultyValidations = {
-  zCreateFaculty,
-  zUpdateFaculty,
+export const FacultyValidations = {
+  CreateFaculty,
+  UpdateFaculty,
 };

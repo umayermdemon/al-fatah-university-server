@@ -4,6 +4,7 @@ import { userRole } from "../Auth/auth.const";
 
 export interface IUser {
   id: string;
+  email: string;
   password: string;
   needsPasswordChange?: boolean;
   passwordChangedAt?: Date;

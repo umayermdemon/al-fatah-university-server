@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { facultyControllers } from "./faculty.controller";
 import validateRequest from "../../middlewares/validateRequest";
-import { zFacultyValidations } from "./faculty.validation";
+import { FacultyValidations } from "./faculty.validation";
 
 const router = Router();
 
@@ -14,7 +14,7 @@ router.get("/:id", facultyControllers.getSingleFaculty);
 // update single faculty
 router.patch(
   "/:id",
-  validateRequest(zFacultyValidations.zUpdateFaculty),
+  validateRequest(FacultyValidations.UpdateFaculty),
   facultyControllers.updateSingleFaculty,
 );
 // delete single faculty

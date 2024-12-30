@@ -1,17 +1,17 @@
 import { z } from "zod";
 
-const zCreateName = z.object({
+const CreateName = z.object({
   firstName: z.string().trim().min(1, "First name is required"),
   middleName: z.string().trim().optional(),
   lastName: z.string().trim().min(1, "Last name is required"),
 });
 
-const zCreateAdmin = z.object({
+const CreateAdmin = z.object({
   body: z.object({
     password: z.string().max(25).optional(),
     admin: z.object({
       designation: z.string().trim().min(1, "Designation is required"),
-      name: zCreateName,
+      name: CreateName,
       gender: z.enum(["male", "female", "other"]),
       dateOfBirth: z.string().refine(date => !isNaN(Date.parse(date)), {
         message: "Invalid date format",
@@ -33,17 +33,17 @@ const zCreateAdmin = z.object({
   }),
 });
 
-const zUpdateName = z.object({
+const UpdateName = z.object({
   firstName: z.string().trim().optional(),
   middleName: z.string().trim().optional(),
   lastName: z.string().trim().optional(),
 });
 
-const zUpdateAdmin = z.object({
+const UpdateAdmin = z.object({
   body: z.object({
     admin: z.object({
       designation: z.string().trim().optional(),
-      name: zUpdateName.optional(),
+      name: UpdateName.optional(),
       gender: z.enum(["male", "female", "other"]).optional(),
       dateOfBirth: z
         .string()
@@ -67,7 +67,7 @@ const zUpdateAdmin = z.object({
 });
 
 // Export the validation schema
-export const zAdminValidations = {
-  zCreateAdmin,
-  zUpdateAdmin,
+export const AdminValidations = {
+  CreateAdmin,
+  UpdateAdmin,
 };

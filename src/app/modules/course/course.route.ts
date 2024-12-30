@@ -1,14 +1,14 @@
 import { Router } from "express";
 import validateRequest from "../../middlewares/validateRequest";
 import { courseControllers } from "./course.controller";
-import { zCourseValidations } from "./course.validation";
+import { CourseValidations } from "./course.validation";
 
 const router = Router();
 
 // create course
 router.post(
   "/create-course",
-  validateRequest(zCourseValidations.zCreateCourseValidationSchema),
+  validateRequest(CourseValidations.CreateCourseValidationSchema),
   courseControllers.createCourse,
 );
 
@@ -21,20 +21,20 @@ router.get("/:id", courseControllers.getSingleCourse);
 // update single course
 router.patch(
   "/:id",
-  validateRequest(zCourseValidations.zUpdateCourseValidationSchema),
+  validateRequest(CourseValidations.UpdateCourseValidationSchema),
   courseControllers.updateSingleCourse,
 );
 
 // add courseFaculty
 router.put(
   "/:courseId/assign-faculties",
-  validateRequest(zCourseValidations.zUpdateCourseFacultyValidationSchema),
+  validateRequest(CourseValidations.UpdateCourseFacultyValidationSchema),
   courseControllers.assignFacultiesWithCourse,
 );
 // remove courseFaculty
 router.delete(
   "/:courseFacultyId/remove-faculties",
-  validateRequest(zCourseValidations.zUpdateCourseFacultyValidationSchema),
+  validateRequest(CourseValidations.UpdateCourseFacultyValidationSchema),
   courseControllers.removeFacultiesWithCourse,
 );
 // delete single course

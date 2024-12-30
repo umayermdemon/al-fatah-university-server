@@ -1,7 +1,7 @@
 import { Router } from "express";
 import validateRequest from "../../middlewares/validateRequest";
 import { adminControllers } from "./admin.controller";
-import { zAdminValidations } from "./admin.validation";
+import { AdminValidations } from "./admin.validation";
 
 const router = Router();
 
@@ -14,7 +14,7 @@ router.get("/:id", adminControllers.getSingleAdmin);
 // update single admin
 router.patch(
   "/:id",
-  validateRequest(zAdminValidations.zUpdateAdmin),
+  validateRequest(AdminValidations.UpdateAdmin),
   adminControllers.updateSingleAdmin,
 );
 // delete single admin

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import validateRequest from "../../middlewares/validateRequest";
-import { zOfferedCourseValidations } from "./offeredCourse.validation";
+import { OfferedCourseValidations } from "./offeredCourse.validation";
 import { offeredCourseControllers } from "./offeredCourse.controller";
 import auth from "../../middlewares/auth";
 
@@ -8,9 +8,7 @@ const router = Router();
 
 router.post(
   "/create-offered-course",
-  validateRequest(
-    zOfferedCourseValidations.zCreateOfferedCourseValidationSchema,
-  ),
+  validateRequest(OfferedCourseValidations.CreateOfferedCourseValidationSchema),
   offeredCourseControllers.createOfferedCourse,
 );
 router.get(
@@ -21,9 +19,7 @@ router.get(
 router.get("/:id", offeredCourseControllers.getSingleOfferedCourse);
 router.patch(
   "/:id",
-  validateRequest(
-    zOfferedCourseValidations.zUpdateOfferedCourseValidationSchema,
-  ),
+  validateRequest(OfferedCourseValidations.UpdateOfferedCourseValidationSchema),
   offeredCourseControllers.updateOfferedCourse,
 );
 router.delete("/:id", offeredCourseControllers.deleteOfferedCourse);

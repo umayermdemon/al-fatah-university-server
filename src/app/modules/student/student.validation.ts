@@ -9,7 +9,7 @@ const capitalizeValidation = z
   });
 
 // Define Zod schema for TUserName
-const zUserName = z.object({
+const UserValidationName = z.object({
   firstName: capitalizeValidation,
   middleName: capitalizeValidation.optional(),
   lastName: capitalizeValidation,
@@ -34,11 +34,11 @@ const zLocalGuardian = z.object({
 });
 
 // Define Zod schema for TStudent
-const zCreateStudent = z.object({
+const CreateStudent = z.object({
   body: z.object({
     password: z.string().max(25).optional(),
     student: z.object({
-      name: zUserName,
+      name: UserValidationName,
       gender: z.enum(["male", "female", "other"], {
         required_error: "Gender is required",
       }),
@@ -60,6 +60,6 @@ const zCreateStudent = z.object({
   }),
 });
 
-export const zStudentValidations = {
-  zCreateStudent,
+export const StudentValidations = {
+  CreateStudent,
 };

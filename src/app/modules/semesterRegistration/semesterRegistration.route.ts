@@ -1,14 +1,14 @@
 import { Router } from "express";
 import { semesterRegistrationControllers } from "./semesterRegistration.controller";
 import validateRequest from "../../middlewares/validateRequest";
-import { zSemesterRegistrationValidations } from "./semesterRegistration.validation";
+import { SemesterRegistrationValidations } from "./semesterRegistration.validation";
 
 const router = Router();
 
 router.post(
   "/create-semester-registration",
   validateRequest(
-    zSemesterRegistrationValidations.zCreateSemesterRegistrationValidationSchema,
+    SemesterRegistrationValidations.CreateSemesterRegistrationValidationSchema,
   ),
   semesterRegistrationControllers.createSemesterRegistration,
 );

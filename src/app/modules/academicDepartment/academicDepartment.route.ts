@@ -1,7 +1,7 @@
 import { Router } from "express";
 import validateRequest from "../../middlewares/validateRequest";
 import { AcademicDepartmentControllers } from "./academicDepartment.controller";
-import { zAcademicDepartmentValidations } from "./academicDepartment.validation";
+import { AcademicDepartmentValidations } from "./academicDepartment.validation";
 
 const router = Router();
 
@@ -9,7 +9,7 @@ const router = Router();
 router.post(
   "/create-academic-department",
   // validateRequest(
-  //   zAcademicDepartmentValidations.createAcademicDepartmentValidation,
+  //   AcademicDepartmentValidations.createAcademicDepartmentValidation,
   // ),
   AcademicDepartmentControllers.createAcademicDepartment,
 );
@@ -22,7 +22,7 @@ router.get("/:id", AcademicDepartmentControllers.getSingleAcademicDepartment);
 router.patch(
   "/:id",
   validateRequest(
-    zAcademicDepartmentValidations.updateAcademicDepartmentValidation,
+    AcademicDepartmentValidations.updateAcademicDepartmentValidation,
   ),
   AcademicDepartmentControllers.updateSingleAcademicDepartment,
 );
