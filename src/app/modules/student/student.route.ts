@@ -1,13 +1,18 @@
 import { Router } from "express";
 import { studentControllers } from "./student.controller";
+import auth from "../../middlewares/auth";
 
 const router = Router();
 
 // get all students
-router.get("/", studentControllers.getAllStudents);
+router.get("/", auth("Admin", "Faculty"), studentControllers.getAllStudents);
 
 // get single student
-router.get("/:id", studentControllers.getSingleStudents);
+router.get(
+  "/:id",
+  auth("Admin", "Faculty"),
+  studentControllers.getSingleStudents,
+);
 
 // update single student
 router.patch("/:id", studentControllers.updateSingleStudents);

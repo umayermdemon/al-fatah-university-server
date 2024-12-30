@@ -53,10 +53,22 @@ const getAllUser = catchAsync(async (req, res) => {
     data: result,
   });
 });
+// get all user
+const getMe = catchAsync(async (req, res) => {
+  const token = req?.headers.authorization;
+  const result = await userServices.getMe(token as string);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User is retrieved successfully",
+    data: result,
+  });
+});
 
 export const userControllers = {
   createStudent,
   createFaculty,
   createAdmin,
   getAllUser,
+  getMe,
 };

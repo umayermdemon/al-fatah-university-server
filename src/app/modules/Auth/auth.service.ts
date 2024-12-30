@@ -5,8 +5,8 @@ import { TLoginUser } from "./auth.interface";
 import httpStatus from "http-status";
 import config from "../../config";
 import bcrypt from "bcrypt";
-import { createToken } from "./auth.utils";
-import jwt from "jsonwebtoken";
+import { createToken, verifyToken } from "./auth.utils";
+
 import sendEmail from "../../utils/sendEmail";
 
 const loginUser = async (payload: TLoginUser) => {
@@ -103,11 +103,7 @@ const changePassword = async (
 };
 const refreshToken = async (token: string) => {
   // verify the token
-  const decoded = jwt.verify(
-    token,
-    config.jwt_refresh_token as string,
-  ) as JwtPayload;
-
+  const decoded = verifyToken(token, config.jwt_access_token as string);
   const { userId, iat } = decoded;
 
   const user = await User.isUserExistsByCustomId(userId);
@@ -191,10 +187,7 @@ const resetPassword = async (
   if (isBlocked === "Blocked") {
     throw new AppError(httpStatus.NOT_FOUND, "This user is blocked");
   }
-  const decoded = jwt.verify(
-    token,
-    config.jwt_access_token as string,
-  ) as JwtPayload;
+  const decoded = verifyToken(token, config.jwt_access_token as string);
 
   if (payload?.id !== decoded?.userId) {
     throw new AppError(httpStatus.FORBIDDEN, "You are not authorized");
