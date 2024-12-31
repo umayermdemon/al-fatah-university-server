@@ -1,7 +1,12 @@
 import { z } from "zod";
+import { UserStatus } from "./user.const";
 
-const UserValidation = z.object({
-  password: z.string().min(6).max(15),
+const UserStatusChange = z.object({
+  body: z.object({
+    status: z.enum([...UserStatus] as [string, ...string[]]),
+  }),
 });
 
-export default UserValidation;
+export const UserValidations = {
+  UserStatusChange,
+};

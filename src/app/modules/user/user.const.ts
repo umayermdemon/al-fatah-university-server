@@ -4,3 +4,5 @@ export const userSearchableFields = [
   "isDeleted",
   "needsPasswordChange",
 ];
+
+export const UserStatus = ["In-progress", "Blocked"];

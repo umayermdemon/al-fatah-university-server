@@ -6,6 +6,7 @@ import { FacultyValidations } from "../faculty/faculty.validation";
 import { AdminValidations } from "../admin/admin.validation";
 import auth from "../../middlewares/auth";
 import { userRole } from "../Auth/auth.const";
+import { UserValidations } from "./user.validation";
 
 const router = Router();
 
@@ -27,6 +28,13 @@ router.post(
   "/create-admin",
   validateRequest(AdminValidations.CreateAdmin),
   userControllers.createAdmin,
+);
+// change status
+router.patch(
+  "/change-status/:id",
+  auth("Admin"),
+  validateRequest(UserValidations.UserStatusChange),
+  userControllers.changeStatus,
 );
 // get me
 router.get("/me", auth("Student", "Faculty", "Admin"), userControllers.getMe);

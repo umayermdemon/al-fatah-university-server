@@ -19,7 +19,6 @@ import { Admin } from "../admin/admin.model";
 import { Faculty } from "../faculty/faculty.model";
 import QueryBuilder from "../../builder/QueryBuilder";
 import { userSearchableFields } from "./user.const";
-import { verifyToken } from "../Auth/auth.utils";
 
 // create a student
 const createStudentIntoDb = async (password: string, payload: TStudent) => {
@@ -138,12 +137,7 @@ const getAllUserFromDb = async (query: Record<string, unknown>) => {
   return result;
 };
 // get me
-const getMe = async (token: string) => {
-  if (!token) {
-    throw new AppError(httpStatus.NOT_FOUND, "Token not found");
-  }
-  const decoded = verifyToken(token, config.jwt_access_token as string);
-  const { userId, role } = decoded;
+const getMe = async (userId: string, role: string) => {
   let result = null;
   if (role === "Student") {
     result = await Student.findOne({ id: userId });
@@ -157,6 +151,10 @@ const getMe = async (token: string) => {
 
   return result;
 };
+const changeStatus = async (id: string, payload: { status: string }) => {
+  const result = await User.findByIdAndUpdate(id, payload, { new: true });
+  return result;
+};
 
 export const userServices = {
   createStudentIntoDb,
@@ -164,4 +162,5 @@ export const userServices = {
   createAdminIntoDb,
   getAllUserFromDb,
   getMe,
+  changeStatus,
 };

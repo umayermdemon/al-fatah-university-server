@@ -55,12 +55,23 @@ const getAllUser = catchAsync(async (req, res) => {
 });
 // get all user
 const getMe = catchAsync(async (req, res) => {
-  const token = req?.headers.authorization;
-  const result = await userServices.getMe(token as string);
+  const { userId, role } = req.user;
+  const result = await userServices.getMe(userId, role);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "User is retrieved successfully",
+    data: result,
+  });
+});
+// change status
+const changeStatus = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await userServices.changeStatus(id, req.body);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User's status changed successfully",
     data: result,
   });
 });
@@ -71,4 +82,5 @@ export const userControllers = {
   createAdmin,
   getAllUser,
   getMe,
+  changeStatus,
 };
