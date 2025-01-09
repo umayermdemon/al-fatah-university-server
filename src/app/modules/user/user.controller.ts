@@ -7,7 +7,11 @@ import catchAsync from "../../utils/catchAsync";
 const createStudent = catchAsync(async (req, res) => {
   const { password, student } = req.body;
   // const zValidationData = zStudent.parse(student);
-  const result = await userServices.createStudentIntoDb(password, student);
+  const result = await userServices.createStudentIntoDb(
+    req.file,
+    password,
+    student,
+  );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

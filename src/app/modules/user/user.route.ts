@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 import { userControllers } from "./user.controller";
 import validateRequest from "../../middlewares/validateRequest";
 import { StudentValidations } from "../student/student.validation";
@@ -7,6 +7,7 @@ import { AdminValidations } from "../admin/admin.validation";
 import auth from "../../middlewares/auth";
 import { userRole } from "../Auth/auth.const";
 import { UserValidations } from "./user.validation";
+import { upload } from "../../utils/sendImageToCloudinary";
 
 const router = Router();
 
@@ -14,6 +15,11 @@ const router = Router();
 router.post(
   "/create-student",
   auth(userRole.Admin),
+  upload.single("file"),
+  (req: Request, res: Response, next: NextFunction) => {
+    req.body = JSON.parse(req.body.data);
+    next();
+  },
   validateRequest(StudentValidations.CreateStudent),
   userControllers.createStudent,
 );

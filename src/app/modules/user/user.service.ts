@@ -19,9 +19,14 @@ import { Admin } from "../admin/admin.model";
 import { Faculty } from "../faculty/faculty.model";
 import QueryBuilder from "../../builder/QueryBuilder";
 import { userSearchableFields } from "./user.const";
+import { sendImageToCloudinary } from "../../utils/sendImageToCloudinary";
 
 // create a student
-const createStudentIntoDb = async (password: string, payload: TStudent) => {
+const createStudentIntoDb = async (
+  file: any,
+  password: string,
+  payload: TStudent,
+) => {
   // console.log(student);
   const user: Partial<IUser> = {};
   const admissionSemester = await AcademicSemester.findById(
@@ -42,8 +47,11 @@ const createStudentIntoDb = async (password: string, payload: TStudent) => {
     if (!newUser.length) {
       throw new AppError(httpStatus.BAD_REQUEST, "Failed to create user");
     }
+    const imageName = `${payload.id}${payload?.name?.firstName}`;
+    const { secure_url } = await sendImageToCloudinary(imageName, file?.path);
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id;
+    payload.profileImage = secure_url;
 
     // create a student [transaction-2]
     const newStudent = await Student.create([payload], { session });
