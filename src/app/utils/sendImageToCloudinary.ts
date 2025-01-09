@@ -3,6 +3,7 @@ import config from "../config";
 import multer from "multer";
 import AppError from "../errors/AppError";
 import httpStatus from "http-status";
+import fs from "fs";
 export const sendImageToCloudinary = async (
   imageName: string,
   path: string,
@@ -23,6 +24,14 @@ export const sendImageToCloudinary = async (
         throw new AppError(httpStatus.CONFLICT, "Image uploaded failed");
       }
     });
+  fs.unlink(path, err => {
+    if (err) {
+      console.error(`Error removing file: ${err}`);
+      return;
+    }
+
+    console.log(`File ${path} has been successfully removed.`);
+  });
 
   return uploadResult;
 };
