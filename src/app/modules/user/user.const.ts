@@ -5,4 +5,4 @@ export const userSearchableFields = [
   "needsPasswordChange",
 ];
 
-export const UserStatus = ["In-progress", "Blocked"];
+export const UserStatus = ["in-progress", "blocked"];

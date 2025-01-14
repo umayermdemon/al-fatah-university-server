@@ -8,8 +8,8 @@ export interface IUser {
   password: string;
   needsPasswordChange?: boolean;
   passwordChangedAt?: Date;
-  role: "Student" | "Admin" | "Faculty";
-  status: "In-progress" | "Blocked";
+  role: "student" | "admin" | "faculty";
+  status: "in-progress" | "blocked";
   isDeleted: boolean;
 }
 

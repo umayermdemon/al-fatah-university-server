@@ -17,14 +17,14 @@ const userSchema = new Schema<IUser, UserModel>(
     passwordChangedAt: { type: Date },
     role: {
       type: String,
-      enum: ["Student", "Faculty", "Admin"],
+      enum: ["student", "faculty", "admin"],
       required: true,
     },
     status: {
       type: String,
       enum: UserStatus,
       required: true,
-      default: "In-progress",
+      default: "in-progress",
     },
     isDeleted: { type: Boolean, required: true, default: false },
   },

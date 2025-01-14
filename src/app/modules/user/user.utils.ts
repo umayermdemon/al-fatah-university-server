@@ -4,7 +4,7 @@ import { User } from "./user.model";
 const findLastStudentId = async () => {
   const lastStudent = await User.findOne(
     {
-      role: "Student",
+      role: "student",
     },
     {
       id: 1,
@@ -44,7 +44,7 @@ export const generatedStudentId = async (payload: TAcademicSemester) => {
 const findLastFacultyId = async () => {
   const lastFaculty = await User.findOne(
     {
-      role: "Faculty",
+      role: "faculty",
     },
     {
       id: 1,
@@ -73,7 +73,7 @@ export const generatedFacultyId = async () => {
 const findLastAdminId = async () => {
   const lastAdmin = await User.findOne(
     {
-      role: "Admin",
+      role: "admin",
     },
     {
       id: 1,

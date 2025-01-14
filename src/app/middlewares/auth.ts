@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextFunction, Request, Response } from "express";
 import catchAsync from "../utils/catchAsync";
 import AppError from "../errors/AppError";
@@ -11,13 +13,20 @@ import { verifyToken } from "../modules/Auth/auth.utils";
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const token = req?.headers?.authorization;
+
     // check the token sent from client
     if (!token) {
       throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized");
     }
     // verify the token
 
-    const decoded = verifyToken(token, config.jwt_access_token as string);
+    let decoded;
+    try {
+      decoded = verifyToken(token, config.jwt_access_token as string);
+    } catch (err) {
+      console.log(err);
+      throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized");
+    }
 
     const { role, userId, iat } = decoded;
 
@@ -30,7 +39,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
       throw new AppError(httpStatus.NOT_FOUND, "This user is deleted");
     }
     const isBlocked = user?.status;
-    if (isBlocked === "Blocked") {
+    if (isBlocked === "blocked") {
       throw new AppError(httpStatus.NOT_FOUND, "This user is blocked");
     }
 

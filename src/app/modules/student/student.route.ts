@@ -5,12 +5,12 @@ import auth from "../../middlewares/auth";
 const router = Router();
 
 // get all students
-router.get("/", auth("Admin", "Faculty"), studentControllers.getAllStudents);
+router.get("/", auth("admin", "faculty"), studentControllers.getAllStudents);
 
 // get single student
 router.get(
   "/:id",
-  auth("Admin", "Faculty"),
+  auth("admin", "admin"),
   studentControllers.getSingleStudents,
 );
 

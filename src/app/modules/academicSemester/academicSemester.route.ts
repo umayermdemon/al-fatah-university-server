@@ -2,6 +2,7 @@ import { Router } from "express";
 import { AcademicSemesterControllers } from "./academicSemester.controller";
 import validateRequest from "../../middlewares/validateRequest";
 import { AcademicSemesterValidations } from "./academicSemester.validation";
+import auth from "../../middlewares/auth";
 
 const router = Router();
 
@@ -13,7 +14,11 @@ router.post(
 );
 
 // find single academic semester
-router.get("/:id", AcademicSemesterControllers.getSingleAcademicSemester);
+router.get(
+  "/:id",
+  auth("admin"),
+  AcademicSemesterControllers.getSingleAcademicSemester,
+);
 // update single academic semester
 router.patch(
   "/:id",
@@ -22,6 +27,10 @@ router.patch(
 );
 
 // find all academic semester
-router.get("/", AcademicSemesterControllers.getAllAcademicSemester);
+router.get(
+  "/",
+  auth("admin"),
+  AcademicSemesterControllers.getAllAcademicSemester,
+);
 
 export const AcademicSemesterRouter = router;

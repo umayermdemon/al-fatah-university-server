@@ -19,7 +19,7 @@ const loginUser = async (payload: TLoginUser) => {
     throw new AppError(httpStatus.NOT_FOUND, "This user is deleted");
   }
   const isBlocked = user?.status;
-  if (isBlocked === "Blocked") {
+  if (isBlocked === "blocked") {
     throw new AppError(httpStatus.NOT_FOUND, "This user is blocked");
   }
   //   check password
@@ -72,7 +72,7 @@ const changePassword = async (
     throw new AppError(httpStatus.NOT_FOUND, "This user is deleted");
   }
   const isBlocked = user?.status;
-  if (isBlocked === "Blocked") {
+  if (isBlocked === "blocked") {
     throw new AppError(httpStatus.NOT_FOUND, "This user is blocked");
   }
   //   check password
@@ -103,7 +103,7 @@ const changePassword = async (
 };
 const refreshToken = async (token: string) => {
   // verify the token
-  const decoded = verifyToken(token, config.jwt_access_token as string);
+  const decoded = verifyToken(token, config.jwt_refresh_token as string);
   const { userId, iat } = decoded;
 
   const user = await User.isUserExistsByCustomId(userId);
@@ -115,7 +115,7 @@ const refreshToken = async (token: string) => {
     throw new AppError(httpStatus.NOT_FOUND, "This user is deleted");
   }
   const isBlocked = user?.status;
-  if (isBlocked === "Blocked") {
+  if (isBlocked === "blocked") {
     throw new AppError(httpStatus.NOT_FOUND, "This user is blocked");
   }
 
@@ -153,7 +153,7 @@ const forgetPassword = async (id: string) => {
     throw new AppError(httpStatus.NOT_FOUND, "This user is deleted");
   }
   const isBlocked = user?.status;
-  if (isBlocked === "Blocked") {
+  if (isBlocked === "blocked") {
     throw new AppError(httpStatus.NOT_FOUND, "This user is blocked");
   }
 
@@ -184,7 +184,7 @@ const resetPassword = async (
     throw new AppError(httpStatus.NOT_FOUND, "This user is deleted");
   }
   const isBlocked = user?.status;
-  if (isBlocked === "Blocked") {
+  if (isBlocked === "blocked") {
     throw new AppError(httpStatus.NOT_FOUND, "This user is blocked");
   }
   const decoded = verifyToken(token, config.jwt_access_token as string);

@@ -13,7 +13,7 @@ router.post(
 );
 router.get(
   "/",
-  auth("Admin", "Faculty", "Student"),
+  auth("admin", "faculty", "student"),
   offeredCourseControllers.getAllOfferedCourse,
 );
 router.get("/:id", offeredCourseControllers.getSingleOfferedCourse);

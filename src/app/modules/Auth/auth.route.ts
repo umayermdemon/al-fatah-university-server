@@ -3,7 +3,6 @@ import { authControllers } from "./auth.controller";
 import validateRequest from "../../middlewares/validateRequest";
 import { AuthValidations } from "./auth.validation";
 import auth from "../../middlewares/auth";
-import { userRole } from "./auth.const";
 
 const router = Router();
 
@@ -14,13 +13,13 @@ router.post(
 );
 router.post(
   "/change-password",
-  auth(userRole.Admin, userRole.Faculty, userRole.Student),
+  auth("admin", "faculty", "student"),
   validateRequest(AuthValidations.ChangeValidationSchema),
   authControllers.changePassword,
 );
 router.post(
   "/refresh-token",
-  validateRequest(AuthValidations.RefreshTokenValidationSchema),
+  // validateRequest(AuthValidations.RefreshTokenValidationSchema),
   authControllers.refreshToken,
 );
 router.post(

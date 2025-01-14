@@ -2,12 +2,14 @@ import { Router } from "express";
 import validateRequest from "../../middlewares/validateRequest";
 import { AcademicFacultyValidations } from "./academicFaculty.validation";
 import { AcademicFacultyControllers } from "./academicFaculty.controller";
+import auth from "../../middlewares/auth";
 
 const router = Router();
 
 // create a academic Faculty
 router.post(
   "/create-academic-faculty",
+  auth("admin"),
   validateRequest(AcademicFacultyValidations.createAcademicFacultyValidation),
   AcademicFacultyControllers.createAcademicFaculty,
 );

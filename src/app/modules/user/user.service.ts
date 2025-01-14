@@ -36,7 +36,7 @@ const createStudentIntoDb = async (
     user.id = await generatedStudentId(admissionSemester);
   }
   user.password = password || (config.default_password as string);
-  user.role = "Student";
+  user.role = "student";
   user.email = payload?.email;
 
   const session = await mongoose.startSession();
@@ -48,7 +48,10 @@ const createStudentIntoDb = async (
       throw new AppError(httpStatus.BAD_REQUEST, "Failed to create user");
     }
     const imageName = `${payload.id}${payload?.name?.firstName}`;
-    const { secure_url } = await sendImageToCloudinary(imageName, file?.path);
+    const { secure_url }: any = await sendImageToCloudinary(
+      imageName,
+      file?.path,
+    );
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id;
     payload.profileImage = secure_url;
@@ -72,7 +75,7 @@ const createStudentIntoDb = async (
 const createFacultyIntoDb = async (password: string, payload: TFaculty) => {
   const user: Partial<IUser> = {};
   user.id = await generatedFacultyId();
-  user.role = "Faculty";
+  user.role = "faculty";
   user.email = payload?.email;
   user.password = password || (config.default_password as string);
 
@@ -104,7 +107,7 @@ const createFacultyIntoDb = async (password: string, payload: TFaculty) => {
 const createAdminIntoDb = async (password: string, payload: TAdmin) => {
   const user: Partial<IUser> = {};
   user.id = await generatedAdminId();
-  user.role = "Admin";
+  user.role = "admin";
   user.email = payload?.email;
   user.password = password || (config.default_password as string);
 
@@ -147,13 +150,13 @@ const getAllUserFromDb = async (query: Record<string, unknown>) => {
 // get me
 const getMe = async (userId: string, role: string) => {
   let result = null;
-  if (role === "Student") {
+  if (role === "student") {
     result = await Student.findOne({ id: userId });
   }
-  if (role === "Faculty") {
+  if (role === "faculty") {
     result = await Faculty.findOne({ id: userId });
   }
-  if (role === "Admin") {
+  if (role === "admin") {
     result = await Admin.findOne({ id: userId });
   }
 

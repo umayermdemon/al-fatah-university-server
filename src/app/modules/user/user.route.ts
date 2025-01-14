@@ -5,7 +5,6 @@ import { StudentValidations } from "../student/student.validation";
 import { FacultyValidations } from "../faculty/faculty.validation";
 import { AdminValidations } from "../admin/admin.validation";
 import auth from "../../middlewares/auth";
-import { userRole } from "../Auth/auth.const";
 import { UserValidations } from "./user.validation";
 import { upload } from "../../utils/sendImageToCloudinary";
 
@@ -14,7 +13,7 @@ const router = Router();
 // create a user
 router.post(
   "/create-student",
-  auth(userRole.Admin),
+  auth("admin"),
   upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = JSON.parse(req.body.data);
@@ -38,13 +37,13 @@ router.post(
 // change status
 router.patch(
   "/change-status/:id",
-  auth("Admin"),
+  auth("admin"),
   validateRequest(UserValidations.UserStatusChange),
   userControllers.changeStatus,
 );
 // get me
-router.get("/me", auth("Student", "Faculty", "Admin"), userControllers.getMe);
+router.get("/me", auth("admin", "faculty", "admin"), userControllers.getMe);
 
-router.get("/", auth("Admin"), userControllers.getAllUser);
+router.get("/", auth("admin"), userControllers.getAllUser);
 
 export const userRouter = router;
