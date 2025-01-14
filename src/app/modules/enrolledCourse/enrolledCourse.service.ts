@@ -21,7 +21,8 @@ const createEnrolledCourseIntoDb = async (
     throw new AppError(httpStatus.NOT_FOUND, "Room is full!");
   }
 
-  const student = await Student.findOne({ id: userId }).select("_id");
+  const student = await Student.findOne({ id: userId }, { _id: 1 });
+  console.log(student);
   if (!student) {
     throw new AppError(httpStatus.NOT_FOUND, "Student not found!");
   }
@@ -29,7 +30,7 @@ const createEnrolledCourseIntoDb = async (
   const isStudentAlreadyEnrolled = await EnrolledCourse.findOne({
     semesterRegistration: isOfferedCourseExists?.semesterRegistration,
     offeredCourse,
-    student: student?._id,
+    student: student,
   });
 
   if (isStudentAlreadyEnrolled) {

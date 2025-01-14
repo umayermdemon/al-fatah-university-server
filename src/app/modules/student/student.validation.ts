@@ -55,7 +55,6 @@ const CreateStudent = z.object({
       guardian: zGuardian,
       localGuardian: zLocalGuardian,
       admissionSemester: z.string(),
-      // profileImage: z.string().url("Profile image must be a valid URL"),
     }),
   }),
 });

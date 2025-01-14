@@ -24,7 +24,11 @@ const createStudent = catchAsync(async (req, res) => {
 const createFaculty = catchAsync(async (req, res) => {
   const { password, faculty } = req.body;
   // const zValidationData = zStudent.parse(student);
-  const result = await userServices.createFacultyIntoDb(password, faculty);
+  const result = await userServices.createFacultyIntoDb(
+    req.file,
+    password,
+    faculty,
+  );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -37,7 +41,11 @@ const createFaculty = catchAsync(async (req, res) => {
 const createAdmin = catchAsync(async (req, res) => {
   const { password, admin } = req.body;
   // const zValidationData = zStudent.parse(student);
-  const result = await userServices.createAdminIntoDb(password, admin);
+  const result = await userServices.createAdminIntoDb(
+    req.file,
+    password,
+    admin,
+  );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

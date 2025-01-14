@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose from "mongoose";
 import config from "../../config";
 import { AcademicSemester } from "../academicSemester/academicSemester.model";
@@ -52,9 +51,9 @@ const createStudentIntoDb = async (
       imageName,
       file?.path,
     );
+    payload.profileImage = secure_url;
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id;
-    payload.profileImage = secure_url;
 
     // create a student [transaction-2]
     const newStudent = await Student.create([payload], { session });
@@ -72,7 +71,11 @@ const createStudentIntoDb = async (
 };
 
 // create a faculty
-const createFacultyIntoDb = async (password: string, payload: TFaculty) => {
+const createFacultyIntoDb = async (
+  file: any,
+  password: string,
+  payload: TFaculty,
+) => {
   const user: Partial<IUser> = {};
   user.id = await generatedFacultyId();
   user.role = "faculty";
@@ -87,6 +90,12 @@ const createFacultyIntoDb = async (password: string, payload: TFaculty) => {
     if (!newUser.length) {
       throw new AppError(httpStatus.BAD_REQUEST, "Failed to create user");
     }
+    const imageName = `${payload.id}${payload?.name?.firstName}`;
+    const { secure_url }: any = await sendImageToCloudinary(
+      imageName,
+      file?.path,
+    );
+    payload.profileImage = secure_url;
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id;
     // create a faculty [transaction-2]
@@ -104,7 +113,11 @@ const createFacultyIntoDb = async (password: string, payload: TFaculty) => {
   }
 };
 // create a admin
-const createAdminIntoDb = async (password: string, payload: TAdmin) => {
+const createAdminIntoDb = async (
+  file: any,
+  password: string,
+  payload: TAdmin,
+) => {
   const user: Partial<IUser> = {};
   user.id = await generatedAdminId();
   user.role = "admin";
@@ -119,6 +132,12 @@ const createAdminIntoDb = async (password: string, payload: TAdmin) => {
     if (!newUser.length) {
       throw new AppError(httpStatus.BAD_REQUEST, "Failed to create user");
     }
+    const imageName = `${payload.id}${payload?.name?.firstName}`;
+    const { secure_url }: any = await sendImageToCloudinary(
+      imageName,
+      file?.path,
+    );
+    payload.profileImage = secure_url;
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id;
     // create a admin [transaction-2]

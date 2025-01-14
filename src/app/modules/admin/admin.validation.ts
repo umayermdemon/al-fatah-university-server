@@ -27,7 +27,6 @@ const CreateAdmin = z.object({
         .string()
         .trim()
         .min(1, "Permanent address is required"),
-      profileImage: z.string().trim().url("Profile image must be a valid URL"),
       isDeleted: z.boolean().default(false),
     }),
   }),
