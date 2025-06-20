@@ -22,7 +22,7 @@ const getAllCourses = catchAsync(async (req, res) => {
   });
 });
 const getSingleCourse = catchAsync(async (req, res) => {
-  const { id } = req.params;
+  const id  = req.params.id;
   const result = await courseServices.getSingleCourseFromDb(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
