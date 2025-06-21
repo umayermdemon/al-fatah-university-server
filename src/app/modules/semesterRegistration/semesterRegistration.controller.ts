@@ -20,11 +20,14 @@ const getAllSemesterRegistration = catchAsync(async (req, res) => {
     await semesterRegistrationServices.getAllSemesterRegistrationIntoDb(
       req.query,
     );
+  const meta = result?.meta;
+  const data = result?.data;
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "Semester Registrations are retrieved successfully !",
-    data: result,
+    meta: meta,
+    data: data,
   });
 });
 const getSingleSemesterRegistration = catchAsync(async (req, res) => {

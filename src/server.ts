@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import app from "./app";
 import config from "./app/config";
 import { Server } from "http";
-// const port = 5000;
 
 const port = config.port;
 let server: Server;
@@ -34,5 +33,3 @@ process.on("uncaughtException", () => {
   console.log(`😗 uncaughtException is detected, shutting down....`);
   process.exit(1);
 });
-
-// console.log(x);

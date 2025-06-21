@@ -14,7 +14,7 @@ const handleDuplicateIdError = (err: any) => {
   const statusCode = 400;
   return {
     statusCode,
-    message: "This name already used",
+    message: `${extractedMessage} is already exists`,
     errorSources,
   };
 };

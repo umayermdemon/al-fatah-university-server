@@ -29,7 +29,7 @@ router.patch(
 // find all academic semester
 router.get(
   "/",
-  auth("admin"),
+  // auth("admin"),
   AcademicSemesterControllers.getAllAcademicSemester,
 );
 

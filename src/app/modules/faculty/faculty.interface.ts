@@ -18,7 +18,7 @@ export type TFaculty = {
   emergencyContactNo: string;
   presentAddress: string;
   permanentAddress: string;
-  profileImage: string;
+  profileImage?: string;
   academicDepartment: Types.ObjectId;
   isDeleted: boolean;
 };

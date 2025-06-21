@@ -26,7 +26,6 @@ const createStudentIntoDb = async (
   password: string,
   payload: TStudent,
 ) => {
-  // console.log(student);
   const user: Partial<IUser> = {};
   const admissionSemester = await AcademicSemester.findById(
     payload.admissionSemester,
@@ -51,9 +50,9 @@ const createStudentIntoDb = async (
       imageName,
       file?.path,
     );
-    payload.profileImage = secure_url;
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id;
+    payload.profileImage = secure_url;
 
     // create a student [transaction-2]
     const newStudent = await Student.create([payload], { session });

@@ -33,8 +33,6 @@ const userSchema = new Schema<IUser, UserModel>(
 
 // pre save middleware/ password bcrypt
 userSchema.pre("save", async function (next) {
-  // const user = this;
-
   this.password = await bcrypt.hash(
     this.password,
     Number(config.bcrypt_salt_rounds),

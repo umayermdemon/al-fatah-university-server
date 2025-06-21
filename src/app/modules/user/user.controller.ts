@@ -6,7 +6,6 @@ import catchAsync from "../../utils/catchAsync";
 // create a student
 const createStudent = catchAsync(async (req, res) => {
   const { password, student } = req.body;
-  // const zValidationData = zStudent.parse(student);
   const result = await userServices.createStudentIntoDb(
     req.file,
     password,

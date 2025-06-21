@@ -3,7 +3,7 @@ import { model, Schema } from "mongoose";
 
 const AcademicFacultySchema = new Schema<TAcademicFaculty>(
   {
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
   },
   {
     timestamps: true,

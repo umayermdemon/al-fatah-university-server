@@ -26,11 +26,24 @@ const getAllAcademicFaculty = catchAsync(async (req, res) => {
     data: result,
   });
 });
-// get single academic Faculty data
-const getSingleAcademicFaculty = catchAsync(async (req, res) => {
+// get single academic Faculty data By Id
+const getSingleAcademicFacultyById = catchAsync(async (req, res) => {
   const { id } = req.params;
   const result =
-    await AcademicFacultyServices.getSingleAcademicFacultyFromDb(id);
+    await AcademicFacultyServices.getSingleAcademicFacultyByIdFromDb(id);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Single academic Faculty get successfully",
+    data: result,
+  });
+});
+// get single academic Faculty data By Name
+const getSingleAcademicFacultyByName = catchAsync(async (req, res) => {
+  const { name } = req.params;
+  console.log(name);
+  const result =
+    await AcademicFacultyServices.getSingleAcademicFacultyByNameFromDb(name);
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -57,6 +70,7 @@ const updateSingleAcademicFaculty = catchAsync(async (req, res) => {
 export const AcademicFacultyControllers = {
   createAcademicFaculty,
   getAllAcademicFaculty,
-  getSingleAcademicFaculty,
+  getSingleAcademicFacultyById,
+  getSingleAcademicFacultyByName,
   updateSingleAcademicFaculty,
 };

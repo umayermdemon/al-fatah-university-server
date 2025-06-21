@@ -1,7 +1,18 @@
+import AppError from "../../errors/AppError";
 import { TAcademicFaculty } from "./academicFaculty.interface";
 import { AcademicFaculty } from "./academicFaculty.model";
+import httpStatus from "http-status";
 
 const createAcademicFacultyIntoDb = async (payload: TAcademicFaculty) => {
+  const isAcademicFacultyExists = await AcademicFaculty.findOne({
+    name: payload?.name,
+  });
+  if (isAcademicFacultyExists) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `${payload?.name} already exists`,
+    );
+  }
   const result = await AcademicFaculty.create(payload);
   return result;
 };
@@ -11,8 +22,13 @@ const getAllAcademicFacultyFromDb = async () => {
   return result;
 };
 // get single academic Faculty
-const getSingleAcademicFacultyFromDb = async (id: string) => {
+const getSingleAcademicFacultyByIdFromDb = async (id: string) => {
   const result = await AcademicFaculty.findById(id);
+  return result;
+};
+// get single academic Faculty by name
+const getSingleAcademicFacultyByNameFromDb = async (name: string) => {
+  const result = await AcademicFaculty.findOne({ name });
   return result;
 };
 // update single academic Faculty
@@ -29,6 +45,7 @@ const updateSingleAcademicFacultyFromDb = async (
 export const AcademicFacultyServices = {
   createAcademicFacultyIntoDb,
   getAllAcademicFacultyFromDb,
-  getSingleAcademicFacultyFromDb,
+  getSingleAcademicFacultyByIdFromDb,
+  getSingleAcademicFacultyByNameFromDb,
   updateSingleAcademicFacultyFromDb,
 };

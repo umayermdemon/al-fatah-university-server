@@ -18,6 +18,6 @@ export type TAdmin = {
   emergencyContactNo: string;
   presentAddress: string;
   permanentAddress: string;
-  profileImage: string;
+  profileImage?: string;
   isDeleted: boolean;
 };

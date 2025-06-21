@@ -56,8 +56,12 @@ const getAllSemesterRegistrationIntoDb = async (
     .sort()
     .paginate()
     .fields();
-  const result = await semesterRegistrationQuery.queryModel;
-  return result;
+  const data = await semesterRegistrationQuery.queryModel;
+  const meta = await semesterRegistrationQuery.countTotal();
+  return {
+    data,
+    meta,
+  };
 };
 const getSingleSemesterRegistrationIntoDb = async (id: string) => {
   const result = await SemesterRegistration.findById(id);
@@ -75,6 +79,12 @@ const updateSemesterRegistrationIntoDb = async (
   const requestedStatus = payload?.status;
   // check registration status === ENDED
   if (currentSemesterStatus === RegistrationStatus.ENDED) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `This semester already ${currentSemesterStatus}`,
+    );
+  }
+  if (currentSemesterStatus === requestedStatus) {
     throw new AppError(
       httpStatus.BAD_REQUEST,
       `This semester already ${currentSemesterStatus}`,
