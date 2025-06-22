@@ -30,7 +30,7 @@ const getSingleAdmin = catchAsync(async (req, res) => {
 
 // update single admin
 const updateSingleAdmin = catchAsync(async (req, res) => {
-  const { id } = req.params;
+  const  id = req.params.id;
   const result = await adminServices.updateSingleAdminIntoDb(
     id,
     req.body.admin,
