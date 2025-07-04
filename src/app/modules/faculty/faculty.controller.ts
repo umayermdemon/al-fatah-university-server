@@ -18,7 +18,7 @@ const getAllFaculties = catchAsync(async (req, res) => {
 
 // get single Faculty
 const getSingleFaculty = catchAsync(async (req, res) => {
-  const { id } = req.params;
+  const  id  = req.params.id;
   const result = await facultyServices.getSingleFacultyFromDb(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
