@@ -26,7 +26,7 @@ const getAllOfferedCourse = catchAsync(async (req, res) => {
   });
 });
 const getSingleOfferedCourse = catchAsync(async (req, res) => {
-  const { id } = req.params;
+  const id  = req.params.id;
   const result = await offeredCourseServices.getSingleOfferedCourseFromDb(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
