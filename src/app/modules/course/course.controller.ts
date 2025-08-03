@@ -53,7 +53,7 @@ const deleteSingleCourse = catchAsync(async (req, res) => {
 });
 
 const assignFacultiesWithCourse = catchAsync(async (req, res) => {
-  const { courseId } = req.params;
+  const courseId = req.params.courseId;
   const { faculties } = req.body;
   const result = await courseServices.assignFacultiesWithCourseIntoDb(
     courseId,
