@@ -40,7 +40,7 @@ const getSingleAcademicFacultyById = catchAsync(async (req, res) => {
 });
 // get single academic Faculty data By Name
 const getSingleAcademicFacultyByName = catchAsync(async (req, res) => {
-  const { name } = req.params;
+  const name = req.params.name;
   console.log(name);
   const result =
     await AcademicFacultyServices.getSingleAcademicFacultyByNameFromDb(name);
@@ -74,5 +74,6 @@ export const AcademicFacultyControllers = {
   getSingleAcademicFacultyByName,
   updateSingleAcademicFaculty,
 };
+
 
 
