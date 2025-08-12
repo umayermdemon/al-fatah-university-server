@@ -4,7 +4,7 @@ import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
 import { AcademicDepartmentServices } from "./academicDepartment.service";
 
-// create a academic Department
+// create  academic Department
 const createAcademicDepartment = catchAsync(async (req, res) => {
   const result =
     await AcademicDepartmentServices.createAcademicDepartmentIntoDb(req.body);
