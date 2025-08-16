@@ -45,7 +45,7 @@ const getSingleAcademicSemester = catchAsync(async (req, res) => {
 });
 // update single academic semester data
 const updateSingleAcademicSemester = catchAsync(async (req, res) => {
-  const { id } = req.params;
+  const  id = req.params.id;
   const result =
     await AcademicSemesterServices.updateSingleAcademicSemesterFromDb(
       id,
@@ -65,4 +65,5 @@ export const AcademicSemesterControllers = {
   getSingleAcademicSemester,
   updateSingleAcademicSemester,
 };
+
 
