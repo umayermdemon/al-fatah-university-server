@@ -16,7 +16,7 @@ const getAllFaculties = catchAsync(async (req, res) => {
   });
 });
 
-// get single Faculty
+// get single faculty
 const getSingleFaculty = catchAsync(async (req, res) => {
   const  id  = req.params.id;
   const result = await facultyServices.getSingleFacultyFromDb(id);
