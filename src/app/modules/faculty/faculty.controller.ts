@@ -3,7 +3,7 @@ import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import { facultyServices } from "./faculty.service";
 
-// get all Faculties
+//  all Faculties
 const getAllFaculties = catchAsync(async (req, res) => {
    console.log(req.query);
   const result = await facultyServices.getAllFacultiesFromDb(req.query);
