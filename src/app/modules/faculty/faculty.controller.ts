@@ -28,7 +28,7 @@ const getSingleFaculty = catchAsync(async (req, res) => {
   });
 });
 
-// update single Faculty
+// update Faculty
 const updateSingleFaculty = catchAsync(async (req, res) => {
   const  id  = req.params.id;
   const result = await facultyServices.updateSingleFacultyIntoDb(
