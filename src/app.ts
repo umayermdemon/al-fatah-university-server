@@ -5,7 +5,6 @@ import notFound from "./app/middlewares/notFound";
 import router from "./app/routes";
 import cookieParser from "cookie-parser";
 const app = express();
-// const port = 3000;
 
 // parsers
 app.use(express.json());
