@@ -3,7 +3,7 @@ import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import { adminServices } from "./admin.service";
 
-// get all Admins
+// get Admins
 const getAllAdmins = catchAsync(async (req, res) => {
   // console.log(req.query);
   const result = await adminServices.getAllAdminsFromDb(req.query);
