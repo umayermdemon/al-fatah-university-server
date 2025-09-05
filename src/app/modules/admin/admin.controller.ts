@@ -5,7 +5,7 @@ import { adminServices } from "./admin.service";
 
 // get Admins
 const getAllAdmins = catchAsync(async (req, res) => {
-  // console.log(req.query);
+
   const result = await adminServices.getAllAdminsFromDb(req.query);
 
   sendResponse(res, {
