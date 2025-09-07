@@ -16,7 +16,7 @@ const getAllAdmins = catchAsync(async (req, res) => {
   });
 });
 
-// get single admin
+// get  admin
 const getSingleAdmin = catchAsync(async (req, res) => {
   const id = req.params.id;
   const result = await adminServices.getSingleAdminFromDb(id);
